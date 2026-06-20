@@ -1,0 +1,80 @@
+version: '3.8'
+
+services:
+
+  # Metadata DB — stores routing table
+  meta_db:
+    image: postgres:15
+    container_name: meta_db
+    environment:
+      POSTGRES_DB: gym_meta
+      POSTGRES_USER: gym
+      POSTGRES_PASSWORD: gym123
+    ports:
+      - "5400:5432"
+    volumes:
+      - meta_data:/var/lib/postgresql/data
+
+  # Physical Node 1
+  shard_node_1:
+    image: postgres:15
+    container_name: shard_node_1
+    environment:
+      POSTGRES_DB: gym_shard
+      POSTGRES_USER: gym
+      POSTGRES_PASSWORD: gym123
+    ports:
+      - "5401:5432"
+    volumes:
+      - shard1_data:/var/lib/postgresql/data
+
+  # Physical Node 2
+  shard_node_2:
+    image: postgres:15
+    container_name: shard_node_2
+    environment:
+      POSTGRES_DB: gym_shard
+      POSTGRES_USER: gym
+      POSTGRES_PASSWORD: gym123
+    ports:
+      - "5402:5432"
+    volumes:
+      - shard2_data:/var/lib/postgresql/data
+
+  # Physical Node 3
+  shard_node_3:
+    image: postgres:15
+    container_name: shard_node_3
+    environment:
+      POSTGRES_DB: gym_shard
+      POSTGRES_USER: gym
+      POSTGRES_PASSWORD: gym123
+    ports:
+      - "5403:5432"
+    volumes:
+      - shard3_data:/var/lib/postgresql/data
+
+  # The Gym App
+  gym_app:
+    build: .
+    container_name: gym_app
+    depends_on:
+      - meta_db
+      - shard_node_1
+      - shard_node_2
+      - shard_node_3
+    environment:
+      META_DB_URL: postgresql://gym:gym123@meta_db:5432/gym_meta
+      SHARD_1_URL: postgresql://gym:gym123@shard_node_1:5432/gym_shard
+      SHARD_2_URL: postgresql://gym:gym123@shard_node_2:5432/gym_shard
+      SHARD_3_URL: postgresql://gym:gym123@shard_node_3:5432/gym_shard
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
+
+volumes:
+  meta_data:
+  shard1_data:
+  shard2_data:
+  shard3_data:
