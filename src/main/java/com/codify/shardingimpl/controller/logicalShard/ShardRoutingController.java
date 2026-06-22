@@ -1,7 +1,7 @@
-package com.codify.shardingimpl.controller;
+package com.codify.shardingimpl.controller.logicalShard;
 
 
-import com.codify.shardingimpl.controller.dto.ShardRoutingDto;
+import com.codify.shardingimpl.controller.logicalShard.dto.ShardRoutingDto;
 import com.codify.shardingimpl.service.ShardRoutingImplService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;

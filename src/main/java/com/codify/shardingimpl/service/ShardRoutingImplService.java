@@ -1,6 +1,6 @@
 package com.codify.shardingimpl.service;
 
-import com.codify.shardingimpl.controller.dto.ShardRoutingDto;
+import com.codify.shardingimpl.controller.logicalShard.dto.ShardRoutingDto;
 import com.codify.shardingimpl.repository.ShardRoutingRepo;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;

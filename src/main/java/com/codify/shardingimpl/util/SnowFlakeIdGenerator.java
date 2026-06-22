@@ -15,7 +15,7 @@ public class SnowFlakeIdGenerator {
         return nextId();
     }
 
-    public Long generateLogicalShardId() {
+    private Long generateLogicalShardId() {
         return shardRoutingConfigLoader.generateLogicalShardId();
     }
 

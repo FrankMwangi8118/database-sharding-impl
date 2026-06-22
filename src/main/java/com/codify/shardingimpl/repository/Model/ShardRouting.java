@@ -1,6 +1,6 @@
 package com.codify.shardingimpl.repository.Model;
 
-import com.codify.shardingimpl.controller.dto.ShardRoutingDto;
+import com.codify.shardingimpl.controller.logicalShard.dto.ShardRoutingDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

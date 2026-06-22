@@ -1,4 +1,4 @@
-package com.codify.shardingimpl.controller.dto;
+package com.codify.shardingimpl.controller.logicalShard.dto;
 
 import com.codify.shardingimpl.repository.Model.ShardRouting;
 import lombok.AllArgsConstructor;
