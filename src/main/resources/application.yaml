@@ -2,35 +2,34 @@ spring:
   application:
     name: sharding-impl
 
-  spring:
-    autoconfigure:
-      exclude:
-        - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
-        - org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration
-        - org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration
+
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+      - org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration
 
   datasource:
     meta:
-      url: jdbc:postgresql://127.0.0.1:5430/gym_meta
+      jdbc-url: jdbc:postgresql://127.0.0.1:5430/gym_meta
       username: gym
       password: gym123
       driver-class-name: org.postgresql.Driver
 
 
     shard1:
-      url: jdbc:postgresql://127.0.0.1:5431/gym_shard
+      jdbc-url: jdbc:postgresql://127.0.0.1:5431/gym_shard
       username: gym
       password: gym123
       driver-class-name: org.postgresql.Driver
 
     shard2:
-      url: jdbc:postgresql://127.0.0.1:5435/gym_shard
+      jdbc-url: jdbc:postgresql://127.0.0.1:5435/gym_shard
       username: gym
       password: gym123
       driver-class-name: org.postgresql.Driver
 
     shard3:
-      url: jdbc:postgresql://127.0.0.1:5434/gym_shard
+      jdbc-url: jdbc:postgresql://127.0.0.1:5434/gym_shard
       username: gym
       password: gym123
       driver-class-name: org.postgresql.Driver

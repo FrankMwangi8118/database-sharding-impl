@@ -1,14 +1,4 @@
--- =============================================
--- META DB — ROUTING TABLE
--- Lives on meta_db container (port 6430)
--- This is the source of truth for
--- logical shard → physical node mapping
--- =============================================
 
-
--- =============================================
--- 1. ROUTING TABLE
--- =============================================
 
 CREATE TABLE IF NOT EXISTS shard_routing (
     id    INT         PRIMARY KEY,
@@ -20,17 +10,6 @@ CREATE TABLE IF NOT EXISTS shard_routing (
     updated_at          TIMESTAMPTZ DEFAULT NOW()
     );
 
-
--- =============================================
--- 2. SEED DATA
--- 12 logical shards
--- 3 physical nodes
--- 4 logical shards per node
---
--- note: host is the docker container name
--- Spring Boot connects via localhost ports
--- but containers talk to each other by name
--- =============================================
 
 INSERT INTO shard_routing
 (id, physical_node_name, physical_node_host, physical_node_port, status)

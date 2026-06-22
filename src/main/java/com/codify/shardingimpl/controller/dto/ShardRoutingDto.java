@@ -1,16 +1,24 @@
-package com.codify.shardingimpl.config.controller.dto;
+package com.codify.shardingimpl.controller.dto;
 
 import com.codify.shardingimpl.repository.Model.ShardRouting;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Builder
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class ShardRoutingDto {
 
     private Long id;
     private String physicalNodeName;
     private String physicalNodeHost;
     private Integer physicalNodePort;
-    private Boolean status;
+    private String status;
 
 
     public ShardRouting toShardRouting(ShardRoutingDto shardRoutingDto) {

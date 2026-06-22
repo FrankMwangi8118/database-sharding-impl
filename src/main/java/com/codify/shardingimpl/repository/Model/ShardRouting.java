@@ -1,14 +1,12 @@
 package com.codify.shardingimpl.repository.Model;
 
-import com.codify.shardingimpl.config.controller.dto.ShardRoutingDto;
+import com.codify.shardingimpl.controller.dto.ShardRoutingDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
 
 import java.time.OffsetDateTime;
-import java.util.Objects;
-import java.util.UUID;
 
 @Entity
 @Builder
@@ -31,7 +29,7 @@ public class ShardRouting {
     private Integer physicalNodePort;
 
     @Column(name = "status")
-    private Boolean status;
+    private String status;
 
     @Column(name = "createdAt")
     private OffsetDateTime createdAt;
@@ -40,7 +38,7 @@ public class ShardRouting {
     private OffsetDateTime updatedAt;
 
 
-    public ShardRoutingDto toShardRouting(ShardRouting shardRoutingDto) {
+    public ShardRoutingDto toShardRoutingDto(ShardRouting shardRoutingDto) {
         return ShardRoutingDto.builder()
                 .id(id)
                 .physicalNodeName(physicalNodeName)
