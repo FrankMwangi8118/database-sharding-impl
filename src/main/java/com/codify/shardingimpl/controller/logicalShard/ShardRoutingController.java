@@ -23,4 +23,11 @@ public class ShardRoutingController {
         return shardRoutingImplService.fetch(id);
     }
 
+    @GetMapping("/extract-logical-id")
+    public Long extract(@RequestParam() Long id) {
+        return shardRoutingImplService.extractLogicalId(id);
+
+    }
+
+
 }

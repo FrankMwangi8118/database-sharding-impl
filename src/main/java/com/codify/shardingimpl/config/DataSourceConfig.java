@@ -7,6 +7,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 
 import javax.sql.DataSource;
+import java.util.HashMap;
+import java.util.Map;
 
 @Configuration
 public class DataSourceConfig {
@@ -15,7 +17,6 @@ public class DataSourceConfig {
      * more of routing and logical sharding
      */
     @Bean(name = "metaDataSource")
-    @Primary
     @ConfigurationProperties("spring.datasource.meta")
     public DataSource metaDataSource() {
         return DataSourceBuilder.create().build();
@@ -43,5 +44,27 @@ public class DataSourceConfig {
     @ConfigurationProperties("spring.datasource.shard3")
     public DataSource shard3DataSource() {
         return DataSourceBuilder.create().build();
+    }
+
+    @Primary
+    @Bean(name = "dataSource")
+    public DataSource routingDataSource(
+            DataSource metaDataSource,
+            DataSource shard1DataSource,
+            DataSource shard2DataSource,
+            DataSource shard3DataSource
+    ) {
+        Map<Object, Object> targets = new HashMap<>();
+        targets.put("meta", metaDataSource);
+        targets.put("shard1", shard1DataSource);
+        targets.put("shard2", shard2DataSource);
+        targets.put("shard3", shard3DataSource);
+
+        RoutingDataSource routingDataSource = new RoutingDataSource();
+        routingDataSource.setTargetDataSources(targets);
+        routingDataSource.setDefaultTargetDataSource(metaDataSource);
+        routingDataSource.afterPropertiesSet();
+
+        return routingDataSource;
     }
 }

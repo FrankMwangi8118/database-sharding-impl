@@ -7,7 +7,9 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.domain.Persistable;
 
+import java.lang.annotation.Annotation;
 import java.time.OffsetDateTime;
 
 @Entity
@@ -17,11 +19,14 @@ import java.time.OffsetDateTime;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Gym {
+public class Gym  implements Persistable<Long> {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
+
+    @Transient
+    @Builder.Default
+    private boolean isNew = true;
 
     @Column(name = "name")
     private String name;
@@ -54,5 +59,21 @@ public class Gym {
                 .createdAt(createdAt)
                 .updatedAt(updatedAt)
                 .build();
+    }
+
+    @Override
+    public Long getId() {
+        return id;
+    }
+
+    @Override
+    public boolean isNew() {
+        return false;
+    }
+
+    @PostPersist
+    @PostLoad
+    public void markNotNew() {
+        isNew = false;
     }
 }

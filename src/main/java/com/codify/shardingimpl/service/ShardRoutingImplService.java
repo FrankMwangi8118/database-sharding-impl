@@ -2,6 +2,7 @@ package com.codify.shardingimpl.service;
 
 import com.codify.shardingimpl.controller.logicalShard.dto.ShardRoutingDto;
 import com.codify.shardingimpl.repository.ShardRoutingRepo;
+import com.codify.shardingimpl.util.SnowflakeIdCodec;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -33,12 +34,17 @@ public class ShardRoutingImplService {
                 .map(model -> model.toShardRoutingDto(model))
                 .toList();
     }
+
     public List<ShardRoutingDto> fetch(Integer id) {
         if (Objects.isNull(id)) {
             return fetchAll();
         }
         var res = findById(id);
         return List.of(res);
+    }
+
+    public Long extractLogicalId(Long id) {
+        return SnowflakeIdCodec.extractShardId(id);
     }
 
 
